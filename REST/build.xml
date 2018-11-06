@@ -1,0 +1,36 @@
+<?xml version="1.0" ?> 
+<project name="REST" default="war">
+    <property name="tomcat.home" Value="C:\Program Files\apache-tomcat-8.0.18-windows-x64\apache-tomcat-8.0.18" />
+	<path id="compile.classpath">
+		<fileset dir="web/WEB-INF/lib">
+			<include name="*.jar"/>
+		</fileset>
+		<fileset dir="${tomcat.home}\lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+	
+	<target name="init">
+		<mkdir dir="bin"/>
+		<mkdir dir="dist" />
+	</target>
+	
+	<target name="compile" depends="init" >
+		<javac destdir="bin" debug="true" srcdir="src">
+			<classpath refid="compile.classpath"/>
+		</javac>
+	</target>
+	
+	<target name="war" depends="compile">
+		<war destfile="dist/REST.war" webxml="web/WEB-INF/web.xml">
+			<fileset dir="web"/>
+			<classes dir="bin"/>
+		</war>
+	</target>
+	
+	<target name="clean">
+		<delete dir="dist" />
+		<delete dir="bin" />
+	</target>
+	
+</project>
